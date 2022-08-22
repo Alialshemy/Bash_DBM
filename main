@@ -11,18 +11,33 @@ urls=mydatabase
 export PS3="$urls>>"
 mypath=`pwd`
 export PATH="$PATH:$mypath:$mypath/databases:$mypath/tables"
+
+##########################
+check_name()
+{
+   regex="^[a-zA-Z#]{0,100}$" 
+    if [[ $1 =~ $regex ]]
+    then 
+          echo true
+    else
+         echo false
+   fi
+
+}
+
+
 select item in  "Create Database" "Connect To Databases" "List Databases" "Drop Database"  "Exit"
 do 
 case $item in
-    "Create Database") database_create
+    "Create Database") . database_create
     ;;
-    "Connect To Databases")
-       database_connect 
+    "Connect To Databases") . database_connect 
+      
       
     ;;
-    "List Databases") database_list
+    "List Databases") . database_list
     ;;
-    "Drop Database")  database_drop
+    "Drop Database") . databasedatabase_drop_drop
           
     ;;
     "Exit")

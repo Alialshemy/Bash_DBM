@@ -2,14 +2,18 @@
 ############ this script create  to database if exit ##################
 
 ###this functions check if database exit or not
-urls=$HOME/mydatabase
-db_validate()
-{
-       echo true
+urls=mydatabase
+db_create()
+{   
+     
+      if [[ `check_name $1` = 'true' &&  ! -e $urls/$1 ]] 
+       then
+          mkdir $urls/$1
+          echo "created successfully"
+       else 
+            echo "Error This Database $1 Already Exists"
+     fi
 }
 read -p "Enter Database name: " db_name
- if[[  db_validate $db_name ]]
-  then
-
-  fi
+db_create $db_name
 

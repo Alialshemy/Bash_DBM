@@ -1,1 +1,52 @@
 #!/bin/bash
+
+read -p "Enter name of Table : " tb_name
+if [[  `check_name $tb_name` = 'true'   && ! -f "$1/tb_name"   ]]
+ then
+   read -p "Enter number of columns :" num_col
+   pk_flag="no"
+   for((i=0;i<$num_col;i++))
+   do 
+   pk='empty'
+   sep=':'
+   n_line="\n"
+      read -p "Colums name : " name
+      #check_name
+      select type in "int" "string"
+      do 
+          case $type in
+            "int")
+             colum_type="int"
+             break
+            ;;
+            "string") 
+            colum_type="string"
+              break
+            ;;
+            *) echo "Error"
+            ;;
+          esac
+       done     
+      if [[ $pk == 'empty'  && $pk_flag == "no" ]]
+      then 
+              read -p "make primary key  yes or no  : "  flag
+              case $flag in
+               "yes") 
+               pk="pk"
+               pk_flag="yes"
+
+               ;;
+               *) echo "Error"
+               ;;
+              esac
+              
+              
+      fi    
+           
+    ali+="$name:$colum_type:$pk$n_line"
+
+   done
+   echo  -e $ali
+        
+    
+fi
