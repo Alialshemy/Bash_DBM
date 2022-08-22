@@ -1,19 +1,28 @@
 #!/bin/bash
-####### this project create by Ali mohamed the frist day in 19-8-2022######
+####### this project create by Ali mohamed & the frist day in 19-8-2022######
 ####### Bash Shell Script Database Management System (DBMS)############
 # this option show to user to select 
-mkdir $HOME/mydatabase
-urls=$HOME/mydatabase
-select item in  Create\ Database Connect\ To\ Databases List\ Databases Drop\ Database  Exit
+if [[ ! -d  mydatabase ]]
+then
+     mkdir mydatabase
+     
+fi
+urls=mydatabase
+export PS3="$urls>>"
+mypath=`pwd`
+export PATH="$PATH:$mypath:$mypath/databases:$mypath/tables"
+select item in  "Create Database" "Connect To Databases" "List Databases" "Drop Database"  "Exit"
 do 
 case $item in
-    "Create Database") ./databases/database_create
+    "Create Database") database_create
     ;;
-    "Connect To Databases") ./databases/database_connect 
+    "Connect To Databases")
+       database_connect 
+      
     ;;
-    "List Databases") ./databases/database_list
+    "List Databases") database_list
     ;;
-    "Drop Database")  ./databases/database_drop
+    "Drop Database")  database_drop
           
     ;;
     "Exit")
@@ -21,6 +30,7 @@ case $item in
       ;;
      *)
       echo "Invild option"
+      
       ;; 
 esac
 

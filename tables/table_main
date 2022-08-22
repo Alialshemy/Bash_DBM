@@ -1,0 +1,39 @@
+#!/bin/bash
+if [[ $# -eq 1 ]]
+  then 
+        
+        select item in  "Create Table"  "List Tables"  "Drop Table"  "Insert into Table"  "Select From Table"  "Delete From Table"  "Update Table" "Exit"
+        do 
+        case $item in
+            "Create Table") table_create
+            ;;
+            "List Tables") table_list
+            ;;
+            "Drop Table") table_drop
+            ;;
+            "Insert into Table")  table_insert
+                  
+            ;;
+            "Select From Table")  table_select
+                  
+            ;;
+            "Delete From Table")  table_select
+                  
+            ;;
+            "Update Table")  table_select
+                  
+            ;;
+            "Exit")
+              break 
+              ;;
+            *)
+              echo "Invild option"
+              ;; 
+        esac
+
+
+
+        done 
+
+  fi
+

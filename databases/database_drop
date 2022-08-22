@@ -1,1 +1,25 @@
 #!/bin/bash
+############ this script connect to database if exit ##################
+
+###this functions check if database exit or not
+urls=mydatabase
+check()
+{
+    regex="^[a-zA-Z#]{0,100}$" 
+     if [[ $1 =~ $regex ]]
+      then 
+          if [[ -d $urls/$1  && ! -z $urls/$1 ]]
+            then
+            rm -r $urls/$1  2>> error.log 
+            
+          else
+            echo "database is Not Exit"
+          fi
+      else
+          echo "Invild name of database"       
+      fi
+}
+      
+     
+read -p "Enter your database to Drop :" database_name
+check $database_name

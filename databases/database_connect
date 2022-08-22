@@ -2,17 +2,25 @@
 ############ this script connect to database if exit ##################
 
 ###this functions check if database exit or not
-urls=$HOME/mydatabase
-
+urls=mydatabase
 check()
 {
-     if [[ -d $urls/$1  && ! -z $urls/$1 ]]
-       then
-           ../tables/main
-     else
-        echo "database is Not Exit"
-    fi   
+    regex="^[a-zA-Z#]{0,100}$" 
+     if [[ $1 =~ $regex ]]
+      then 
+          if [[ -d $urls/$1  && ! -z $urls/$1 ]]
+            then
+              export PS3="$urls/$1>>"
+              table_main $urls/$1
+            
+          else
+            echo "database is Not Exit"
+          fi
+      else
+          echo "Invild name of database"       
+      fi
 }
+      
+     
 read -p "Enter your database to connect " database_name
-echo $database_name
 check $database_name

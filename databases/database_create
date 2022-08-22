@@ -1,28 +1,15 @@
 #!/bin/bash
-####### this project create by Ali mohamed the frist day in 19-8-2022######
-####### Bash Shell Script Database Management System (DBMS)############
-# this option show to user to select 
-option=("","","","")
-select item in  Create\ Database Connect\ To\ Databases List\ Databases Drop\ Database  Exit
-do 
-case $item in
-    "Create Database") ./database_create
-    ;;
-    "Connect To Databases") echo 2 or 3
-    ;;
-    "List Databases") echo default
-    ;;
-    "Drop Database")
-           echo "ali"
-    ;;
-    "Exit")
-      break 
-      ;;
-     *)
-      echo "Invild option"
-      ;; 
-esac
+############ this script create  to database if exit ##################
 
+###this functions check if database exit or not
+urls=$HOME/mydatabase
+db_validate()
+{
+       echo true
+}
+read -p "Enter Database name: " db_name
+ if[[  db_validate $db_name ]]
+  then
 
+  fi
 
-done 
