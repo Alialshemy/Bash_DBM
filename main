@@ -2,21 +2,21 @@
 ####### this project create by Ali mohamed & the frist day in 19-8-2022######
 ####### Bash Shell Script Database Management System (DBMS)############
 # this option show to user to select 
-if [[ ! -d  mydatabase ]]
+if [[ ! -d  DBM ]]
 then
-     mkdir mydatabase
+     mkdir DBM
      
 fi
-urls=mydatabase
-export PS3="$urls>>"
+urls=DBM
+export PS3="DBM>>"
 mypath=`pwd`
 export PATH="$PATH:$mypath:$mypath/databases:$mypath/tables"
 
 ##########################
 check_name()
 {
-   regex="^[a-zA-Z#]{0,100}$" 
-    if [[ $1 =~ $regex ]]
+   regex="^[a-zA-Z]{0,100}$" 
+    if [[ $1 =~ $regex  && ! -z $1 ]]
     then 
           echo true
     else

@@ -1,1 +1,18 @@
 #!/bin/bash
+declare -i try=4
+while [[ $try -gt 0 ]] 
+do 
+ echo ######################################## Drop Table######################################
+ read -p "Enter Table Name : " tb_name
+  if [[ `check_name $tb_name` = "true"  && -e $1/meta_data/$tb_name ]]
+  then
+       rm   $1/meta_data/$tb_name 2>>error.log
+       rm   $1/data/$tb_name 2>>error.log
+       echo "Droped sucessfully"
+       break
+    else
+        echo "Enter valid table "
+        try=try-1
+   fi     
+done
+

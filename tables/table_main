@@ -1,9 +1,10 @@
 #!/bin/bash
 
+url=$1
 check_name()
 {
-   regex="^[a-zA-Z#]{0,100}$" 
-    if [[ $1 =~ $regex ]]
+   regex="^[a-zA-Z]" 
+    if [[ $1 =~ $regex  && ! -z $1 ]]
     then 
           echo true
     else
@@ -19,22 +20,23 @@ if [[ $# -eq 1 ]]
         select item in  "Create Table"  "List Tables"  "Drop Table"  "Insert into Table"  "Select From Table"  "Delete From Table"  "Update Table" "Exit"
         do 
         case $item in
-            "Create Table") . table_create $1
+            "Create Table") . table_create $url
             ;;
-            "List Tables") . table_list $1
+            "List Tables") . table_list $url
             ;;
-            "Drop Table") . table_drop $1
+            "Drop Table") . table_drop $url
+              
             ;;
-            "Insert into Table")  . table_insert $1
+            "Insert into Table")  . table_insert $url
                   
             ;;
-            "Select From Table")  . table_select $1
+            "Select From Table")  . table_select $url
                   
             ;;
-            "Delete From Table")  . table_delete $1
+            "Delete From Table")  . table_delete $url
                   
             ;;
-            "Update Table")  . table_update $1
+            "Update Table")  . table_update $url
                   
             ;;
             "Exit")

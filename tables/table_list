@@ -1,1 +1,3 @@
 #!/bin/bash
+
+ls "$1/meta_data/" 2>>error.log 

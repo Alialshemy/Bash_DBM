@@ -1,1 +1,61 @@
 #!/bin/bash
+###############Insert Data in Table##############################
+url=$1
+file_index=()
+declare -i i=0
+declare -i index=1
+declare -i try=4
+data=''
+while [[ $try -gt 0 ]]; do
+  echo "###################################Inert Table"###########################
+  read -p "Enter Table name :" tb_name
+  if [[ `check_name $tb_name` = "true"  && -e $1/meta_data/$tb_name ]]
+  then
+          declare -i num_field=`cat $1/meta_data/$tb_name | wc -l`-1 #number of filed
+            pk=$(awk -F: '{ if($3=="pk") print $1 }' $1/meta_data/$tb_name)
+            for colum in $(awk -F: '{ print $1 }' $1/meta_data/$tb_name); do
+              if [[ $pk = $colum  ]]; then
+                # check if deplicate primary key beagin
+                while true; do
+                  read -p "please Enter $colum :" input
+                  if [[ $(cut -d : -f $index $1/data/$tb_name | grep $input) = $input ]]; then
+                    echo "deplicate primary key Enter anther key"
+                  else
+                    if [[ ! $num_field -eq 1 ]]
+                     then
+                        data+="$input:"
+                        num_field=num_field-1
+                        break
+                     else 
+                         data+="$input"
+                        num_field=num_field-1
+                        break
+                    fi    
+
+                  fi
+                done
+                # end check deplicate
+              else
+                read -p "please Enter $colum :" input
+                num_field=num_field-1
+                if [[  $num_field  -gt 0 ]]; then
+                    data+="$input:"   
+                else
+                  data+="$input"
+                  break
+                fi
+              fi
+            done
+            break
+       
+  else
+            echo "Enter valid table "
+            try=try-1
+  fi
+done
+  
+if [[ ! -z $data ]]
+      then 
+      echo $data >>$1/data/$tb_name
+      fi
+ 

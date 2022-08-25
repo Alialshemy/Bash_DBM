@@ -1,17 +1,24 @@
 #!/bin/bash
-
+################################table creation ##############################
+url=$1
 read -p "Enter name of Table : " tb_name
-if [[  `check_name $tb_name` = 'true'   && ! -f "$1/tb_name"   ]]
+if [[  `check_name $tb_name` = 'true'   ]]
  then
    read -p "Enter number of columns :" num_col
    pk_flag="no"
    for((i=0;i<$num_col;i++))
    do 
-   pk='empty'
+   pk='null'
    sep=':'
    n_line="\n"
-      read -p "Colums name : " name
+      read -p "Colums name : " colum_name
       #check_name
+      if [[ ! `check_name $colum_name` = 'true' ]]
+      then  
+          echo "Invild Colum_name"
+           i=$((i-1))
+           continue;
+      fi
       select type in "int" "string"
       do 
           case $type in
@@ -25,16 +32,15 @@ if [[  `check_name $tb_name` = 'true'   && ! -f "$1/tb_name"   ]]
             ;;
             *) echo "Error"
             ;;
-          esac
+           esac
        done     
-      if [[ $pk == 'empty'  && $pk_flag == "no" ]]
+      if [[ $pk == 'null'  && $pk_flag == "no" ]]
       then 
               read -p "make primary key  yes or no  : "  flag
               case $flag in
                "yes") 
                pk="pk"
                pk_flag="yes"
-
                ;;
                *) echo "Error"
                ;;
@@ -43,10 +49,15 @@ if [[  `check_name $tb_name` = 'true'   && ! -f "$1/tb_name"   ]]
               
       fi    
            
-    ali+="$name:$colum_type:$pk$n_line"
+    meta_data+="$colum_name:$colum_type:$pk$n_line"
 
    done
-   echo  -e $ali
-        
+  
+   touch "$url/meta_data/$tb_name" 2>>error.log
+   echo -e $meta_data >> "$url/meta_data/$tb_name"
+   touch $url/data/$tb_name
+   echo "table created successfully"
+else
+  echo " Table Existing" 
     
 fi
