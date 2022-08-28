@@ -28,6 +28,7 @@ check_name()
 
 while true 
 do
+clear
 echo "#########################Main menu #####################################"
 echo "1) Create Database"
 echo "2) Connect To Databases"
