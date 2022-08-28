@@ -8,7 +8,7 @@ declare -i try=4
 data=''
 while [[ $try -gt 0 ]]; do
   echo "###################################Inert Table"###########################
-  read -p "Enter Table name :" tb_name
+  read -r -p "Enter Table name :" tb_name
   if [[ `check_name $tb_name` = "true"  && -e $1/meta_data/$tb_name ]]
   then
           declare -i num_field=`cat $1/meta_data/$tb_name | wc -l`-1 #number of filed
@@ -17,7 +17,7 @@ while [[ $try -gt 0 ]]; do
               if [[ $pk = $colum  ]]; then
                 # check if deplicate primary key beagin
                 while true; do
-                  read -p "please Enter $colum :" input
+                  read -r -p "please Enter $colum :" input
                   if [[ $(cut -d : -f $index $1/data/$tb_name | grep $input) = $input ]]; then
                     echo "deplicate primary key Enter anther key"
                   else
@@ -36,7 +36,7 @@ while [[ $try -gt 0 ]]; do
                 done
                 # end check deplicate
               else
-                read -p "please Enter $colum :" input
+                read -r -p "please Enter $colum :" input
                 num_field=num_field-1
                 if [[  $num_field  -gt 0 ]]; then
                     data+="$input:"   

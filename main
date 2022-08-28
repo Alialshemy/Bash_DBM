@@ -26,21 +26,25 @@ check_name()
 }
 
 
-select item in  "Create Database" "Connect To Databases" "List Databases" "Drop Database"  "Exit"
-do 
-case $item in
-    "Create Database") . database_create
+while true 
+do
+echo "#########################Main menu #####################################"
+echo "1) Create Database"
+echo "2) Connect To Databases"
+echo "3) List Databases"
+echo "4) Drop Database"
+echo "5) Exit"
+read -r -p "Enter your choise :" input
+case $input in
+    1) . database_create
     ;;
-    "Connect To Databases") . database_connect 
-      
-      
+    2) . database_connect 
+      ;;
+    3) . database_list
     ;;
-    "List Databases") . database_list
+    4) . databasedatabase_drop_drop     
     ;;
-    "Drop Database") . databasedatabase_drop_drop
-          
-    ;;
-    "Exit")
+    5)
       break 
       ;;
      *)

@@ -11,7 +11,7 @@ if [[  `check_name $tb_name` = 'true'   ]]
    pk='null'
    sep=':'
    n_line="\n"
-      read -p "Colums name : " colum_name
+      read -r -p "Colums name : " colum_name
       #check_name
       if [[ ! `check_name $colum_name` = 'true' ]]
       then  
@@ -36,7 +36,7 @@ if [[  `check_name $tb_name` = 'true'   ]]
        done     
       if [[ $pk == 'null'  && $pk_flag == "no" ]]
       then 
-              read -p "make primary key  yes or no  : "  flag
+              read -r -p "make primary key  yes or no  : "  flag
               case $flag in
                "yes") 
                pk="pk"

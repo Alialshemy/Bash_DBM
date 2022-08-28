@@ -1,5 +1,4 @@
 name:string:pk
 age:int:null
 score:int:null
-sub:string:null
 

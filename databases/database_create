@@ -21,6 +21,6 @@ else
    fi
 
 }
-read -p "Enter Database name: " db_name
+read  -r -p  "Enter Database name: " db_name
 db_create $db_name
 

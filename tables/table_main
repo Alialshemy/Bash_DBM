@@ -1,5 +1,5 @@
 #!/bin/bash
-
+clear
 url=$1
 check_name()
 {
@@ -17,29 +17,35 @@ check_name()
 if [[ $# -eq 1 ]]
   then 
         
-        select item in  "Create Table"  "List Tables"  "Drop Table"  "Insert into Table"  "Select From Table"  "Delete From Table"  "Update Table" "Exit"
+        while true
         do 
-        case $item in
-            "Create Table") . table_create $url
+        
+        echo "############################Table Main manu#####################################"
+        echo "1) Create Table"
+        echo "2) List Tables"
+        echo "3) Drop Table"
+        echo "4) Insert into Table"
+        echo "5) Select From Table"
+        echo "5) Delete From Table"
+        echo "6) Update Table"
+        echo "7) Exit"
+        read -r -p "Enter your choise : " input
+        case $input in
+            1) . table_create $url
             ;;
-            "List Tables") . table_list $url
+            2) . table_list $url
             ;;
-            "Drop Table") . table_drop $url
-              
+            3) . table_drop $url 
             ;;
-            "Insert into Table")  . table_insert $url
-                  
+            4)  . table_insert $url     
             ;;
-            "Select From Table")  . table_select $url
-                  
+            5)  . table_select $url     
             ;;
-            "Delete From Table")  . table_delete $url
-                  
+            6)  . table_delete $url     
             ;;
-            "Update Table")  . table_update $url
-                  
+            7)  . table_update $url     
             ;;
-            "Exit")
+            8)
               break 
               ;;
             *)

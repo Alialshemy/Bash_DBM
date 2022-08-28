@@ -8,7 +8,7 @@ check() {
   if [[ `check_name $1` = 'true' ]]; then
     if [[ -e "$urls/$1" ]]; then
 
-      read -p "Are you sure ? [Y/N or y/n] : " flag
+      read -r -p "Are you sure ? [Y/N or y/n] : " flag
       if [[ $flag = @([Yy]) ]]; then
         rm -r $urls/$1 2>>./.error.log
         if [[ $? == 0 ]]; then
@@ -29,5 +29,5 @@ check() {
   fi
 }
 
-read -p "Enter your database to Drop :" database_name
+read -r -p "Enter your database to Drop :" database_name
 check $database_name
