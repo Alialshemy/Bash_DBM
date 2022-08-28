@@ -1,18 +1,37 @@
 #!/bin/bash
 ########################Table update ####################################
-table_list  $1
 read -r -p "Enter Table Name : " tb_name
   if [[ `check_name $tb_name` = "true"  && -e $1/meta_data/$tb_name ]]
   then 
-        declare -i i=1
-       echo 'Table Filed:'
-       read -r -p Please enter the primary key of the record you want to update! pk
-        awk -F : '{}' $1/data/$tb_name
-        for colum in $(awk -F: '{ print $1 }' $1/meta_data/$tb_name); do
-             echo   "$i)$colum"
-             i=i+1
-        done 
-
+      declare -i i=1
+      field=()
+       echo 'Table Fieled:'
+       while true ;do
+            for colum in $(awk -F: '{ print $1 }' $1/meta_data/$tb_name); do
+                  echo   "$i)$colum"
+                  field+=("$colum")
+                  i=i+1
+            done 
+            read -r -p "Enter of Field you want update :" filed_num
+            if [[ $((filed_num))  -gt i ]]
+            then
+               echo "Invild Choise"
+               i=1
+               continue
+            fi
+            read -r -p "Please enter the primary key of the record you want to update! :" input_pk
+            if [[  `cut -d : -f 1  $1/data/$tb_name | grep  $input_pk ` = $input_pk   ]] #check if primary key exist
+            then 
+                  read -r -p "Enter update of ${field[$(($filed_num -1 ))]} "  new_value  
+                  old_value=`awk -F: '{if($1=="'$input_pk'") print $'$filed_num' }' $1/data/$tb_name `  
+                  sed -i  ''$input_pk's/'$old_value'/'$new_value'/g' $1/data/$tb_name 
+                  break
+                 
+            else 
+                echo "the primary key not exit"
+            fi
+      i=1
+      done
   else
      echo "Invild Table  "    
   fi

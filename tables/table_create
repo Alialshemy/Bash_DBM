@@ -1,9 +1,11 @@
 #!/bin/bash
 ################################table creation ##############################
 url=$1
-read -p "Enter name of Table : " tb_name
+meta_data=""
+pk_meta=""
+read -r -p "Enter name of Table : " tb_name
 if [[ $(check_name $tb_name) = 'true' ]]; then
-  read -p "Enter number of columns :" num_col
+  read -r -p "Enter number of columns :" num_col
    
   if [[ ! $(($num_col)) -eq 0 ]]; then
     pk_flag="no"
@@ -39,6 +41,8 @@ if [[ $(check_name $tb_name) = 'true' ]]; then
         "yes")
           pk="pk"
           pk_flag="yes"
+          pk_meta="$colum_name:$colum_type:pk"
+          continue
           ;;
         *)
           echo "Error " >> error.log
@@ -47,18 +51,30 @@ if [[ $(check_name $tb_name) = 'true' ]]; then
 
       fi
 
-      meta_data+="$colum_name:$colum_type:$pk$n_line"
+      meta_data+="$colum_name:$colum_type:null$n_line"
 
     done
-
+    if [[ ! -z $pk_meta ]]
+    then 
     touch "$url/meta_data/$tb_name" 2>>error.log
+    echo -e $pk_meta>>"$url/meta_data/$tb_name"
     echo -e $meta_data >>"$url/meta_data/$tb_name"
     touch $url/data/$tb_name
     echo "table created successfully"
+    else
+    pk_meta="id:int:pk"
+    touch "$url/meta_data/$tb_name" 2>>error.log
+    echo -e $pk_meta>>"$url/meta_data/$tb_name"
+    echo -e $meta_data >>"$url/meta_data/$tb_name"
+    touch $url/data/$tb_name
+    echo "added default primary key"
+    echo "table created successfully"
+    
+    fi
   else
     echo "Invild Input"
   fi
 else
-  echo " Table Existing"
+  echo " Invalid name of Table"
 
 fi

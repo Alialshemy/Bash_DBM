@@ -12,13 +12,12 @@ while [[ $try -gt 0 ]]; do
   if [[ `check_name $tb_name` = "true"  && -e $1/meta_data/$tb_name ]]
   then
           declare -i num_field=`cat $1/meta_data/$tb_name | wc -l`-1 #number of filed
-            pk=$(awk -F: '{ if($3=="pk") print $1 }' $1/meta_data/$tb_name) #get primary key field
             for colum in $(awk -F: '{ print $1 }' $1/meta_data/$tb_name); do
-              if [[ $pk = $colum  ]]; then 
+              if [[ `cut -d : -f 1  $1/meta_data/$tb_name | head -1 ` = $colum  ]]; then 
                 # check if deplicate primary key beagin
                 while true; do
                   read -r -p "please Enter $colum :" input
-                  if [[  "$(cut -d : -f $index $1/data/$tb_name | grep $input | head -1)" = $input  ]]; then
+                  if [[  "$(cut -d : -f 1 $1/data/$tb_name | grep $input | head -1)" = $input  ]]; then
                     echo "deplicate primary key Enter anther key"
                   else
                     if [[ ! $num_field -eq 1 ]]
