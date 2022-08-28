@@ -2,62 +2,63 @@
 ################################table creation ##############################
 url=$1
 read -p "Enter name of Table : " tb_name
-if [[  `check_name $tb_name` = 'true'   ]]
- then
-   read -p "Enter number of columns :" num_col
-   pk_flag="no"
-   for((i=0;i<$num_col;i++))
-   do 
-   pk='null'
-   sep=':'
-   n_line="\n"
+if [[ $(check_name $tb_name) = 'true' ]]; then
+  read -p "Enter number of columns :" num_col
+   
+  if [[ ! $(($num_col)) -eq 0 ]]; then
+    pk_flag="no"
+    for ((i = 0; i < $num_col; i++)); do
+      pk='null'
+      sep=':'
+      n_line="\n"
       read -r -p "Colums name : " colum_name
       #check_name
-      if [[ ! `check_name $colum_name` = 'true' ]]
-      then  
-          echo "Invild Colum_name"
-           i=$((i-1))
-           continue;
+      if [[ ! $(check_name $colum_name) = 'true' ]]; then
+        echo "Invild Colum_name"
+        i=$((i - 1))
+        continue
       fi
-      select type in "int" "string"
-      do 
-          case $type in
-            "int")
-             colum_type="int"
-             break
-            ;;
-            "string") 
-            colum_type="string"
-              break
-            ;;
-            *) echo "Error"
-            ;;
-           esac
-       done     
-      if [[ $pk == 'null'  && $pk_flag == "no" ]]
-      then 
-              read -r -p "make primary key  yes or no  : "  flag
-              case $flag in
-               "yes") 
-               pk="pk"
-               pk_flag="yes"
-               ;;
-               *) echo "Error"
-               ;;
-              esac
-              
-              
-      fi    
-           
-    meta_data+="$colum_name:$colum_type:$pk$n_line"
+      select type in "int" "string"; do
+        case $type in
+        "int")
+          colum_type="int"
+          break
+          ;;
+        "string")
+          colum_type="string"
+          break
+          ;;
+        *)
+          echo "Error"
+          ;;
+        esac
+      done
+      if [[ $pk == 'null' && $pk_flag == "no" ]]; then
+        read -r -p "make primary key  yes or no  : " flag
+        case $flag in
+        "yes")
+          pk="pk"
+          pk_flag="yes"
+          ;;
+        *)
+          echo "Error " >> error.log
+          ;;
+        esac
 
-   done
-  
-   touch "$url/meta_data/$tb_name" 2>>error.log
-   echo -e $meta_data >> "$url/meta_data/$tb_name"
-   touch $url/data/$tb_name
-   echo "table created successfully"
+      fi
+
+      meta_data+="$colum_name:$colum_type:$pk$n_line"
+
+    done
+
+    touch "$url/meta_data/$tb_name" 2>>error.log
+    echo -e $meta_data >>"$url/meta_data/$tb_name"
+    touch $url/data/$tb_name
+    echo "table created successfully"
+  else
+    echo "Invild Input"
+  fi
 else
-  echo " Table Existing" 
-    
+  echo " Table Existing"
+
 fi

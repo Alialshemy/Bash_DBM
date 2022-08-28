@@ -1,3 +1,5 @@
 #!/bin/bash
-
+echo "#################### Show table##########################"
+echo "Tables In Database " 
 ls "$1/meta_data/" 2>>error.log 
+

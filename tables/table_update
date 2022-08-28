@@ -1,1 +1,20 @@
 #!/bin/bash
+########################Table update ####################################
+table_list  $1
+read -r -p "Enter Table Name : " tb_name
+  if [[ `check_name $tb_name` = "true"  && -e $1/meta_data/$tb_name ]]
+  then 
+        declare -i i=1
+       echo 'Table Filed:'
+       read -r -p Please enter the primary key of the record you want to update! pk
+        awk -F : '{}' $1/data/$tb_name
+        for colum in $(awk -F: '{ print $1 }' $1/meta_data/$tb_name); do
+             echo   "$i)$colum"
+             i=i+1
+        done 
+
+  else
+     echo "Invild Table  "    
+  fi
+
+

@@ -1,0 +1,5 @@
+name:string:null
+dep:string:null
+age:int:pk
+asd:string:null
+
