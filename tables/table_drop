@@ -8,10 +8,10 @@ do
   then
        rm   $1/meta_data/$tb_name 2>>error.log
        rm   $1/data/$tb_name 2>>error.log
-       echo "Droped sucessfully"
+        echo   -e "\033[36m"Droped sucessfully"\033[m"
        break
     else
-        echo "Enter valid table "
+        echo -e "\033[31mEnter valid table\033[m" 
         try=try-1
    fi     
 done

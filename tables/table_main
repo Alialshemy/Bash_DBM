@@ -1,9 +1,8 @@
 #!/bin/bash
-clear
 url=$1
 check_name()
 {
-   regex="^[a-zA-Z]" 
+   regex="^[a-zA-Z]{0,100}$" 
     if [[ $1 =~ $regex  && ! -z $1 ]]
     then 
           echo true
@@ -29,7 +28,8 @@ if [[ $# -eq 1 ]]
         echo "5) Delete From Table"
         echo "6) Table Delete"
         echo "7) Update Table"
-        echo "8) Exit"
+         echo "8) Clear "
+        echo "9) Exit"
         read -r -p "Enter your choise : " input
         case $input in
             1) . table_create $url
@@ -47,10 +47,13 @@ if [[ $# -eq 1 ]]
             7)  . table_update $url     
             ;;
             8)
+              clear 
+              ;;
+               9)
               break 
               ;;
             *)
-              echo "Invild option"
+             echo -e "\033[31mEnter valid option 033[m" 
               ;; 
         esac
 

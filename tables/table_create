@@ -9,14 +9,36 @@ if [[ $(check_name $tb_name) = 'true' ]]; then
    
   if [[ ! $(($num_col)) -eq 0 ]]; then
     pk_flag="no"
+    name_colum_array=()
     for ((i = 0; i < $num_col; i++)); do
       pk='null'
       sep=':'
       n_line="\n"
       read -r -p "Colums name : " colum_name
+      dep="false"
+     
+      if [ ${#name_colum_array[@]} -gt 0 ]
+        then
+         
+            for item in ${name_colum_array[@]} ; do 
+                   if [ $colum_name = $item  ] 
+                   then
+                       dep="true"
+                       echo -e "\033[31mdeplicate name colum enter anther name\033[m" 
+                       break
+                   fi
+            done
+            if [ $dep = "true" ]
+            then
+               dep="false"
+               i=$((i - 1))
+               continue
+            fi
+
+        fi
       #check_name
       if [[ ! $(check_name $colum_name) = 'true' ]]; then
-        echo "Invild Colum_name"
+         echo -e "\033[31mInvild Colum_name\033[m" 
         i=$((i - 1))
         continue
       fi
@@ -42,6 +64,9 @@ if [[ $(check_name $tb_name) = 'true' ]]; then
           pk="pk"
           pk_flag="yes"
           pk_meta="$colum_name:$colum_type:pk"
+          name_colum_array+=($colum_name)
+          
+
           continue
           ;;
         *)
@@ -50,31 +75,32 @@ if [[ $(check_name $tb_name) = 'true' ]]; then
         esac
 
       fi
-
+      name_colum_array+=($colum_name)
       meta_data+="$colum_name:$colum_type:null$n_line"
-
+     
     done
     if [[ ! -z $pk_meta ]]
     then 
     touch "$url/meta_data/$tb_name" 2>>error.log
     echo -e $pk_meta>>"$url/meta_data/$tb_name"
-    echo -e $meta_data >>"$url/meta_data/$tb_name"
+    echo -e ${colum_array[@]} >>"$url/meta_data/$tb_name"
     touch $url/data/$tb_name
-    echo "table created successfully"
+    echo   -e "\033[36mtable created successfully\033[m"
     else
     pk_meta="id:int:pk"
     touch "$url/meta_data/$tb_name" 2>>error.log
     echo -e $pk_meta>>"$url/meta_data/$tb_name"
-    echo -e $meta_data >>"$url/meta_data/$tb_name"
+    echo -e $meta_data>>"$url/meta_data/$tb_name"
     touch $url/data/$tb_name
-    echo "added default primary key"
-    echo "table created successfully"
+    echo   -e "\033[36madded default primary key\033[m"
+    echo   -e "\033[36mtable created successfully\033[m"
     
     fi
   else
-    echo "Invild Input"
+   
+     echo -e "\033[31mInvild Input\033[m" 
   fi
 else
-  echo " Invalid name of Table"
+   echo -e "\033[31mInvalid name of Table\033[m" 
 
 fi

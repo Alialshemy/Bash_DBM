@@ -15,7 +15,7 @@ read -r -p "Enter Table Name : " tb_name
             read -r -p "Enter of Field you want update :" filed_num
             if [[ $((filed_num))  -gt i ]]
             then
-               echo "Invild Choise"
+               echo -e "\033[31mInvild Choise\033[m" 
                i=1
                continue
             fi
@@ -28,12 +28,14 @@ read -r -p "Enter Table Name : " tb_name
                   break
                  
             else 
-                echo "the primary key not exit"
+                
+               echo -e "\033[31mthe primary key not exit\033[m" 
             fi
       i=1
       done
-  else
-     echo "Invild Table  "    
+  else   
+     echo -e "\033[31mInvalid name of Table\033[m" 
+
   fi
 
 

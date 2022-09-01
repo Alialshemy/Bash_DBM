@@ -18,7 +18,7 @@ while [[ $try -gt 0 ]]; do
                 while true; do
                   read -r -p "please Enter $colum :" input
                   if [[  "$(cut -d : -f 1 $1/data/$tb_name | grep $input | head -1)" = $input  ]]; then
-                    echo "deplicate primary key Enter anther key"
+                     echo -e "\033[31mdeplicate primary key Enter anther key\033[m" 
                   else
                     if [[ ! $num_field -eq 1 ]]
                      then
@@ -49,7 +49,8 @@ while [[ $try -gt 0 ]]; do
             break
        
   else
-            echo "Enter valid table "
+  
+            echo -e "\033[31mEnter valid table 033[m" 
             try=try-1
   fi
 done
@@ -57,5 +58,6 @@ done
 if [[ ! -z $data ]]
       then 
       echo $data >>$1/data/$tb_name
+       echo   -e "\033[36mtable updated successfully\033[m"
       fi
  

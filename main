@@ -34,7 +34,8 @@ echo "1) Create Database"
 echo "2) Connect To Databases"
 echo "3) List Databases"
 echo "4) Drop Database"
-echo "5) Exit"
+echo "5) clear"
+echo "6) Exit"
 read -r -p "Enter your choise :" input
 case $input in
     1) . database_create
@@ -45,9 +46,12 @@ case $input in
     ;;
     4) . databasedatabase_drop_drop     
     ;;
-    5)
-      break 
+    5)  
+      clear 
       ;;
+      6)
+      break 
+      ;; 
      *)
       echo "Invild option"
       
