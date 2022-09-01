@@ -1,22 +1,22 @@
 #!/bin/bash
 
-
 function deleteFromTable {
-  echo -e "Enter Table Name: \c"
-  read tName
-  echo -e "Enter Row id: \c"
-  read id
-  if [[ $id == "" ]]
-  then  
-    echo "Not Found"
-  else
-      NR=`awk -F ':' '{if ('$id' == $1) print NR}' $1/data/$tName 2>>./.error.log`
-      sed -i ''$NR'd' $1/data/$tName 2>>./.error.log
-      echo "Row Deleted Successfully"
+  read -r -p "Enter Table Name: " tName
+  if [ -e $1/data/$tName ];then
+        read -r -p "Enter Row id: " id
+        NR=`awk -F ':' '{if ('$id' == $1) print NR}' $1/data/$tName 2>>./.error.log`
+        if [[ $id == "" || -z $NR ]];then  
+          echo "\033[31mNot Found 👍 \033[m"
+        else
+            sed -i ''$NR'd' $1/data/$tName 2>>./.error.log
+            echo "Row Deleted Successfully"
 
+        fi
+  else
+    echo -e "\033[31mERROR Table Name 😄 \033[m"
   fi
 }
-deleteFromTable
+deleteFromTable $1
 
 
 
