@@ -1,1 +1,52 @@
 #!/bin/bash
+
+
+function deleteFromTable {
+  echo -e "Enter Table Name: \c"
+  read tName
+  echo -e "Enter Row id: \c"
+  read id
+  if [[ $id == "" ]]
+  then  
+    echo "Not Found"
+  else
+      NR=`awk -F ':' '{if ('$id' == $1) print NR}' $1/data/$tName 2>>./.error.log`
+      sed -i ''$NR'd' $1/data/$tName 2>>./.error.log
+      echo "Row Deleted Successfully"
+
+  fi
+}
+deleteFromTable
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

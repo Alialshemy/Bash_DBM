@@ -1,1 +1,127 @@
 #!/bin/bash
+
+url=$1
+
+function selectMenu {
+  echo -e "\n\n+---------------Select Menu--------------------+"
+  echo "| 1. Select All Columns of a Table              |" 
+  echo "| 2. Select Specific Column from a Table        |" 
+  echo "| 3. Select From Table under condition          |"
+  echo "| 4. Aggregate Function for a Specific Column   |"
+  echo "| 5. Back To Tables Menu                        |"
+  echo "| 6. Back To Main Menu                          |"
+  echo "| 7. Exit     6
+                                    |"
+  echo "+----------------------------------------------+"
+  echo -e "Enter Choice: \c"
+  read ch
+  case $ch in
+    1) selectAll ;;
+    2) selectCol ;;
+    3) clear; selectCon ;;
+    4) ;;
+    5) clear; tablesMenu ;;
+    6) clear; cd ../.. 2>>./.error.log; mainMenu ;;
+    7) exit ;;
+    *) echo " Wrong Choice " ; selectMenu;
+  esac
+}
+
+function selectAll {
+  read -p "Enter Table Name: " tName
+  
+  awk -F':' '{print $0}' $url/data/$tName
+  if [[ $? != 0 ]]
+  then
+    echo "Error Displaying Table $tName"
+  fi
+  selectMenu
+}
+
+function selectCol {
+  read -r -p "Enter Table Name: " tName
+  read -r -p "Enter Row id: " id
+  if [[ $id == "" ]]
+  then  
+    echo "Not Found"
+  else
+      awk -F ':' '{if ('$id' == $1) print $0}' $url/data/$tName 2>>./.error.log
+      #echo "Row printed Successfully"
+  fi
+  selectMenu
+}
+
+function selectCon {
+  echo -e "\n\n+--------Select Under Condition Menu-----------+"
+  echo "| 1. Select All Columns Matching Condition    |"
+  echo "| 2. Select Specific Column Matching Condition|"
+  echo "| 3. Back To Selection Menu                   |"
+  echo "| 4. Back To Main Menu                        |"
+  echo "| 5. Exit                                     |"
+  echo "+---------------------------------------------+"
+  read -p "Enter Choice: " ch
+  case $ch in
+    1) clear; allCond $url;;
+    2) clear; specCond ;;
+    3) clear; selectCon ;;
+    4) clear; cd ../.. 2>>./.error.log; mainMenu ;;
+    5) exit ;;
+    *) echo " Wrong Choice " ; selectCon;
+  esac
+}
+
+function allCond {
+  echo -e "Select all columns from TABLE Where FIELD(OPERATOR)VALUE \n"
+  
+  read -p "enter table name: " table  
+  read -p "enter column name: " Ncol
+  read -p "enter condition value: " val
+  meta_col_num=`awk -F':' '{if("'$Ncol'" == $1) print NR}' "$1/meta_data/$table" `
+
+  awk -F':' '{if($'$meta_col_num'=="'$val'") print $0}' $url/data/$table
+
+}
+#select name from student where name=val
+function specCond {
+  read -p "enter table name: " Ntable
+  read -p "enter column name: " Ncol
+  read -p "enter column condition name: " colcond
+  read -p "enter condition value: " val
+
+meta_col_num=`awk -F':' '{if("'$Ncol'" == $1) print NR}' $url/meta_data/$Ntable`
+meta_col_cond=`awk -F':' '{if("'$colcond'" == $1) print NR}' $url/meta_data/$Ntable`
+echo $meta_col_num
+echo $meta_col_cond
+awk -F':' '{if($'$meta_col_cond' == "'$val'") print $'$meta_col_num'}' $url/data/$Ntable
+  
+}
+
+selectMenu
+
+# read -p "enter table name: " $Ntable
+# read -p "enter column name: " $Ncol
+# read -p "enter condition value: " $val
+
+# meta_col_num=`awk -F':' '{
+#   if("$Ncol" == $1) 
+#     print NR
+# }' $1/meta_data/$Ntable`
+
+# awk -F':' '{if($'$meta_col_num'=="'$val'") print $0}' $1/data/$Ntable
+# awk -F':' '{if($'$meta_col_num'=="'$val'") print $'$meta_col_num'}'
+
+# read -p "enter table name: " $Ntable
+# read -p "enter column name: " $Ncol
+# read -p "enter condition value: " $val
+
+# meta_col_num=`awk -F':' '{
+#   if($Ncol==$1)column
+#     print NR
+# }' $1/meta_data/$Ntable`
+
+# awk -F':' '{if($'$meta_col_num' == '$val') print $'$meta_col_num'}' $1/data/$Ntable
+
+
+
+
+

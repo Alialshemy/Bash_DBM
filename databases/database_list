@@ -4,7 +4,7 @@ clear
 x=`ls -F $urls |grep / `
 i=0
 for item in $x; do
-    echo "$i:${item}"]
+    echo "$i:${item}"
     i++
 done
         
