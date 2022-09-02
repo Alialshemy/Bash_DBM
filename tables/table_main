@@ -25,7 +25,7 @@ if [[ $# -eq 1 ]]
         echo "3) Drop Table"
         echo "4) Insert into Table"
         echo "5) Select From Table"
-        echo "5) Delete From Table"
+       # echo "5) Delete From Table"
         echo "6) Table Delete"
         echo "7) Update Table"
          echo "8) Clear "
