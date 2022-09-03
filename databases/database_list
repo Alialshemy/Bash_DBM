@@ -1,10 +1,9 @@
 #!/bin/bash
-url=mydatabase
-clear  
-x=`ls -F $urls |grep / `
-i=0
+url=DBM
+echo "#######################Show Databases#########################"
+x=`ls  $url `
 for item in $x; do
-    echo "$i:${item}"
-    i++
+    echo "$item"
+    
 done
         

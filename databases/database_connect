@@ -13,10 +13,11 @@ check()
               table_main $url/$1
             
           else
-            echo "database is Not Exit"
+           
+            echo -e "\033[31mdatabase is Not Exit\033[m"  
           fi
       else
-          echo "Invild name of database"       
+          echo -e "\033[31mInvild name of database\033[m"      
       fi
 }
       

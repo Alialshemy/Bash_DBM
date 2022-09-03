@@ -2,7 +2,7 @@
 url=$1
 check_name()
 {
-   regex="^[a-zA-Z]{0,100}$" 
+   regex="^[a-zA-Z_]{0,100}$" 
     if [[ $1 =~ $regex  && ! -z $1 ]]
     then 
           echo true
@@ -53,7 +53,7 @@ if [[ $# -eq 1 ]]
               break 
               ;;
             *)
-             echo -e "\033[31mEnter valid option 033[m" 
+             echo -e "\033[31m Enter valid option \033[m" 
               ;; 
         esac
 

@@ -7,7 +7,7 @@ read -r -p "Enter name of Table : " tb_name
 if [[ $(check_name $tb_name) = 'true' ]]; then
   read -r -p "Enter number of columns :" num_col
    
-  if [[ ! $(($num_col)) -eq 0 ]]; then
+  if [[ ! $(($num_col)) -eq 0  && $(($num_col)) -lt 1000  ]]; then
     pk_flag="no"
     name_colum_array=()
     for ((i = 0; i < $num_col; i++)); do

@@ -1,9 +1,0 @@
-id:int:pk
-name:string:null
-<<<<<<< HEAD
-age:int:null
-score:int:null
-=======
-address:string:null
->>>>>>> 495ed661f0e884f446efacb379bb2347e1c719b3
-

@@ -14,10 +14,13 @@ db_create()
            mkdir  $url/$1/data 2>>error.log
           echo "created successfully"
        else 
-            echo "Error This Database $1 Already Existing "
+            
+            echo -e "\033[31mError This Database $1 Already Existing \033[m" 
+            
      fi
 else
-      echo "invalid Database"
+      echo -e "\033[31minvalid Database\033[m" 
+      
    fi
 
 }

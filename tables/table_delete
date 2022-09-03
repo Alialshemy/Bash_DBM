@@ -4,16 +4,16 @@ function deleteFromTable {
   read -r -p "Enter Table Name: " tName
   if [ -e $1/data/$tName ];then
         read -r -p "Enter Row id: " id
-        NR=`awk -F ':' '{if ('$id' == $1) print NR}' $1/data/$tName 2>>./.error.log`
+        NR=`awk -F ':' '{if ($1=="'$id'" ) print NR}' $1/data/$tName 2>>./.error.log`
         if [[ $id == "" || -z $NR ]];then  
-          echo "\033[31m Not Found 👍 \033[m"
+          echo  -e "\033[31m Not Found 👍 \033[m"
         else
             sed -i ''$NR'd' $1/data/$tName 2>>./.error.log
             echo "Row Deleted Successfully"
 
         fi
   else
-    echo -e "\033[31m ERROR Table Name 😄 \033[m"
+    echo -e "\033[31mERROR Table Name 😄\033[m"
   fi
 }
 deleteFromTable $1

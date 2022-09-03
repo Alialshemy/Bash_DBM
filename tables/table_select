@@ -17,7 +17,7 @@ function selectMenu {
                                     |"
   echo "+----------------------------------------------+"
   echo -e "Enter Choice: \c"
-  read ch
+  read -r ch
   case $ch in
     1) selectAll ;;
     2) selectCol ;;
@@ -31,7 +31,7 @@ function selectMenu {
 }
 
 function selectAll {
-  read -p "Enter Table Name: " tName
+  read -r -p "Enter Table Name: " tName
   
   awk -F':' '{print $0}' $url/data/$tName
   if [[ $? != 0 ]]
@@ -62,7 +62,7 @@ function selectCon {
   echo "| 4. Back To Main Menu                        |"
   echo "| 5. Exit                                     |"
   echo "+---------------------------------------------+"
-  read -p "Enter Choice: " ch
+  read -r -p "Enter Choice: " ch
   case $ch in
     1) clear; allCond $url;;
     2) clear; specCond ;;
@@ -76,9 +76,9 @@ function selectCon {
 function allCond {
   echo -e "Select all columns from TABLE Where FIELD(OPERATOR)VALUE \n"
   
-  read -p "enter table name: " table  
-  read -p "enter column name: " Ncol
-  read -p "enter condition value: " val
+  read -r -p "enter table name: " table  
+  read -r -p "enter column name: " Ncol
+  read -r -p "enter condition value: " val
   meta_col_num=`awk -F':' '{if("'$Ncol'" == $1) print NR}' "$1/meta_data/$table" `
 
   awk -F':' '{if($'$meta_col_num'=="'$val'") print $0}' $url/data/$table
@@ -86,10 +86,10 @@ function allCond {
 }
 #select name from student where name=val
 function specCond {
-  read -p "enter table name: " Ntable
-  read -p "enter column name: " Ncol
-  read -p "enter column condition name: " colcond
-  read -p "enter condition value: " val
+  read  -r -p "enter table name: " Ntable
+  read -r -p "enter column name: " Ncol
+  read -r -p "enter column condition name: " colcond
+  read -r -p "enter condition value: " val
 
 meta_col_num=`awk -F':' '{if("'$Ncol'" == $1) print NR}' $url/meta_data/$Ntable`
 meta_col_cond=`awk -F':' '{if("'$colcond'" == $1) print NR}' $url/meta_data/$Ntable`

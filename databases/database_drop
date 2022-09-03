@@ -7,7 +7,6 @@ check() {
   
   if [[ `check_name $1` = 'true' ]]; then
     if [[ -e "$urls/$1" ]]; then
-
       read -r -p "Are you sure ? [Y/N or y/n] : " flag
       if [[ $flag = @([Yy]) ]]; then
         rm -r $urls/$1 2>>./.error.log
@@ -21,11 +20,11 @@ check() {
 
       fi
     else
-      echo "Database Not found"
+      echo -e "\033[31mDatabase Not found\033[m" 
     fi
 
   else
-    echo "Invild name of database"
+    echo -e "\033[31mInvild name of database\033[m" 
   fi
 }
 

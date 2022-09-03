@@ -1,8 +1,10 @@
 #!/bin/bash
 declare -i try=4
+if [[ `ls $1/meta_data/ | wc -l ` -gt 0 ]]
+then
 while [[ $try -gt 0 ]] 
 do 
- echo ######################################## Drop Table######################################
+ echo " ######################################## Drop Table Have 4 try ######################################"
  read -r -p "Enter Table Name : " tb_name
   if [[ `check_name $tb_name` = "true"  && -e $1/meta_data/$tb_name ]]
   then
@@ -15,4 +17,6 @@ do
         try=try-1
    fi     
 done
-
+else
+    echo -e "\033[31m Empty database \033[m" 
+fi
