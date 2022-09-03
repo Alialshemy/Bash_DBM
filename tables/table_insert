@@ -1,13 +1,14 @@
 #!/bin/bash
 ###############Insert Data in Table##############################
 url=$1
+clear
 file_index=()
 declare -i i=0
 declare -i index=1
 declare -i try=4
 data=''
 while [[ $try -gt 0 ]]; do
-  echo "###################################Inert Table"###########################
+  echo "+--------------------------------------Insert Table------------------------------+"
   read -r -p "Enter Table name :" tb_name
   if [[ `check_name $tb_name` = "true"  && -e $1/meta_data/$tb_name ]]
   then
@@ -50,7 +51,7 @@ while [[ $try -gt 0 ]]; do
        
   else
   
-            echo -e "\033[31mEnter valid table 033[m" 
+            echo -e "\033[31mEnter valid table \033[m" 
             try=try-1
   fi
 done

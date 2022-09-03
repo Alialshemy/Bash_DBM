@@ -1,5 +1,6 @@
 #!/bin/bash
 url=DBM
+clear
 echo "#######################Show Databases#########################"
 x=`ls  $url `
 for item in $x; do

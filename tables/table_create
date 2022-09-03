@@ -83,7 +83,7 @@ if [[ $(check_name $tb_name) = 'true' ]]; then
     then 
     touch "$url/meta_data/$tb_name" 2>>error.log
     echo -e $pk_meta>>"$url/meta_data/$tb_name"
-    echo -e ${colum_array[@]} >>"$url/meta_data/$tb_name"
+    echo -e $meta_data>>"$url/meta_data/$tb_name"
     touch $url/data/$tb_name
     echo   -e "\033[36mtable created successfully\033[m"
     else

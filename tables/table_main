@@ -1,8 +1,9 @@
 #!/bin/bash
 url=$1
+clear
 check_name()
 {
-   regex="^[a-zA-Z_]{0,100}$" 
+   regex="^[a-zA-Z]{0,100}$" 
     if [[ $1 =~ $regex  && ! -z $1 ]]
     then 
           echo true
@@ -12,24 +13,25 @@ check_name()
 
 }
 
-
 if [[ $# -eq 1 ]]
   then 
         
         while true
         do 
-        
-        echo "############################Table Main manu#####################################"
+        echo    "+------------------------------------------------------------------+"
+        echo -e "                  DataBase Name: $url                          "
+        echo    "+-------------------- Table Main manu -----------------------------+"
         echo "1) Create Table"
         echo "2) List Tables"
         echo "3) Drop Table"
         echo "4) Insert into Table"
         echo "5) Select From Table"
-       # echo "5) Delete From Table"
-        echo "6) Table Delete"
+        echo "6) Delete from Table"
         echo "7) Update Table"
-         echo "8) Clear "
+        echo "8) Clear "
         echo "9) Exit"
+            echo    "+------------------------------------------------------------------+"
+
         read -r -p "Enter your choise : " input
         case $input in
             1) . table_create $url

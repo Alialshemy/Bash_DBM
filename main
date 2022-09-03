@@ -1,5 +1,5 @@
 #!/bin/bash
-####### this project create by Ali mohamed & Mostafa the frist day in 19-8-2022######
+####### this project create by Ali mohamed & the frist day in 19-8-2022######
 ####### Bash Shell Script Database Management System (DBMS)############
 # this option show to user to select 
 if [[ ! -d  DBM ]]
@@ -15,7 +15,7 @@ export PATH="$PATH:$mypath:$mypath/databases:$mypath/tables"
 ##########################
 check_name()
 {
-   regex="^[a-zA-Z_]{0,100}$" 
+   regex="^[a-zA-Z]{0,100}$" 
     if [[ $1 =~ $regex  && ! -z $1 ]]
     then 
           echo true
@@ -24,8 +24,11 @@ check_name()
    fi
 
 }
+
+
 while true 
 do
+
 echo "#########################Main menu #####################################"
 echo "1) Create Database"
 echo "2) Connect To Databases"
@@ -38,23 +41,22 @@ case $input in
     1) . database_create
     ;;
     2) . database_connect 
-      ;;
-    3) . database_list
     ;;
-    4) . database_drop    
+    3) . database_list 
     ;;
-    5)  
-      clear 
-      ;;
-      6)
-      break 
-      ;; 
-     *)
-       echo -e "\033[31mInvild Option\033[m"  
-      
+    4) . database_drop     
+    ;;
+    5)   clear ;;
+    6)break ;; 
+    *)
+      echo "Invild option"
       ;; 
 esac
 
 
 
 done 
+
+
+
+

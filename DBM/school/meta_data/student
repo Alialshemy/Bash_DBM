@@ -1,0 +1,6 @@
+id:int:pk
+name:string:null
+address:string:null
+phone:string:null
+score:int:null
+

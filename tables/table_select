@@ -1,100 +1,140 @@
 #!/bin/bash
-<<<<<<< HEAD
-echo "########################## Select from Table #####################"
-=======
 
 url=$1
 
 function selectMenu {
-  echo -e "\n\n+---------------Select Menu--------------------+"
-  echo "| 1. Select All Columns of a Table              |" 
-  echo "| 2. Select Specific Column from a Table        |" 
-  echo "| 3. Select From Table under condition          |"
-  echo "| 4. Aggregate Function for a Specific Column   |"
-  echo "| 5. Back To Tables Menu                        |"
-  echo "| 6. Back To Main Menu                          |"
-  echo "| 7. Exit     6
-                                    |"
-  echo "+----------------------------------------------+"
+  echo -e "\n\n ---------------Select Menu--------------------\n"
+  echo " 1. Select All Columns of a Table              " 
+  echo " 2. Select Specific Column from a Table        " 
+  echo " 3. Select From Table under condition          "
+  echo " 4. Back To Table Menu                   "
+  echo " 5. Back To Main Menu                        "
+ echo "+----------------------------------------------+"
   echo -e "Enter Choice: \c"
-  read -r ch
+  read ch
+    
   case $ch in
     1) selectAll ;;
     2) selectCol ;;
     3) clear; selectCon ;;
-    4) ;;
-    5) clear; tablesMenu ;;
-    6) clear; cd ../.. 2>>./.error.log; mainMenu ;;
-    7) exit ;;
+    4) clear; return ;;
+    5) clear; exit 0;;
     *) echo " Wrong Choice " ; selectMenu;
   esac
 }
-
+ #select * from tableName
 function selectAll {
-  read -r -p "Enter Table Name: " tName
-  
-  awk -F':' '{print $0}' $url/data/$tName
-  if [[ $? != 0 ]]
-  then
-    echo "Error Displaying Table $tName"
+  clear
+  echo -e "\n-------------Select All--------------------\n"
+  read -p "Enter Table Name: " tName
+  if [ ! -e $url/data/$tName ]; then
+      echo -e "\033[31mERROR Table Name 😄 \033[m"
+  else
+    awk -F':' '{print $0}' $url/data/$tName
+    if [[ $? != 0 ]];then
+      echo "\033[31mError Displaying Table $tName 😄 \033[m"
+    fi
   fi
   selectMenu
 }
 
+#select * from table where id = val 
 function selectCol {
+  clear
+  echo -e "\n\n+--------Select Row By Id-----------+"
   read -r -p "Enter Table Name: " tName
-  read -r -p "Enter Row id: " id
-  if [[ $id == "" ]]
-  then  
-    echo "Not Found"
-  else
+  if  [  -e $url/data/$tName ];then
+    read -r -p "Enter Row id: " id
+    if [[ $id == "" || -z $id ]];then  
+        echo "Not Found"
+        return
+    fi
+    test=`awk -F ':' '{if ('$id' == $1) print $0}' $url/data/$tName 2>>./.error.log`
+        if [[ -z $test ]]; then
+            echo -e "\033[31mNO Data Selected With this ID 😄 \033[m"
+            return
+        fi
       awk -F ':' '{if ('$id' == $1) print $0}' $url/data/$tName 2>>./.error.log
-      #echo "Row printed Successfully"
+        #echo "Row printed Successfully"
+  else
+    echo -e "\033[31mERROR Table Name 😄 \033[m"
   fi
   selectMenu
 }
 
 function selectCon {
   echo -e "\n\n+--------Select Under Condition Menu-----------+"
-  echo "| 1. Select All Columns Matching Condition    |"
-  echo "| 2. Select Specific Column Matching Condition|"
-  echo "| 3. Back To Selection Menu                   |"
-  echo "| 4. Back To Main Menu                        |"
-  echo "| 5. Exit                                     |"
+  echo " 1. Select All Columns Matching Condition    "
+  echo " 2. Select Specific Column Matching Condition"
+  echo " 3. Back To Table Menu                   "
+  echo " 4. Back To Main Menu                        "
   echo "+---------------------------------------------+"
-  read -r -p "Enter Choice: " ch
+  read -p "Enter Choice: " ch
   case $ch in
     1) clear; allCond $url;;
     2) clear; specCond ;;
-    3) clear; selectCon ;;
-    4) clear; cd ../.. 2>>./.error.log; mainMenu ;;
-    5) exit ;;
+    3) clear; return ;;
+    4) clear; exit 0;;
     *) echo " Wrong Choice " ; selectCon;
   esac
 }
 
+#select * from student where colcond = val
 function allCond {
-  echo -e "Select all columns from TABLE Where FIELD(OPERATOR)VALUE \n"
   
-  read -r -p "enter table name: " table  
-  read -r -p "enter column name: " Ncol
-  read -r -p "enter condition value: " val
-  meta_col_num=`awk -F':' '{if("'$Ncol'" == $1) print NR}' "$1/meta_data/$table" `
-
-  awk -F':' '{if($'$meta_col_num'=="'$val'") print $0}' $url/data/$table
+  echo -e "Select all columns from TABLE Where FIELD(OPERATOR)VALUE \n"
+  read -p "enter table name: " table
+  if [ ! -e $url/data/$table ]; then
+      echo -e "\033[31mERROR Table Name 😄 \033[m"
+    return
+  fi
+    read -p "enter column name: " Ncol
+    exists=`awk -F':' '{if("'$Ncol'" == $1) print NR}' "$1/meta_data/$table" `
+    
+    if [[ -z $exists ]];then
+      echo -e "\033[31mERROR column Name 😄 \033[m"
+      return
+    fi
+        read -p "enter condition value: " val
+        meta_col_num=`awk -F':' '{if("'$Ncol'" == $1) print NR}' "$1/meta_data/$table" `
+        ecolumn=`awk -F':' '{if($'$meta_col_num'=="'$val'") print $0}' $url/data/$table`
+        if [[ -z $ecolumn ]];then
+            echo -e "\033[31mERROR value Not Valid 😄 \033[m"
+          return
+        fi
+        awk -F':' '{if($'$meta_col_num'=="'$val'") print $0}' $url/data/$table
 
 }
-#select name from student where name=val
+#select Ncol from student where colcond=val
 function specCond {
-  read  -r -p "enter table name: " Ntable
-  read -r -p "enter column name: " Ncol
-  read -r -p "enter column condition name: " colcond
-  read -r -p "enter condition value: " val
+  read -p "enter table name: " Ntable
+  if [ ! -e $url/data/$Ntable ]; then
+      echo -e "\033[31mERROR Table Name 😄 \033[m"
+    return
+  fi
+  read -p "enter column name: " Ncol
+    exists=`awk -F':' '{if("'$Ncol'" == $1) print NR}' $url/meta_data/$Ntable` 
+    if [[ -z $exists ]];then
+      echo -e "\033[31mERROR column Name 😄 \033[m"
+      return
+    fi
+  read -p "enter column condition name: " colcond
+   exists=`awk -F':' '{if("'$colcond'" == $1) print NR}' $url/meta_data/$Ntable`
+    
+    if [[ -z $exists ]];then
+      echo -e "\033[31mERROR column Name 😄 \033[m"
+      return
+    fi
+  read -p "enter condition value: " val
 
 meta_col_num=`awk -F':' '{if("'$Ncol'" == $1) print NR}' $url/meta_data/$Ntable`
 meta_col_cond=`awk -F':' '{if("'$colcond'" == $1) print NR}' $url/meta_data/$Ntable`
-echo $meta_col_num
-echo $meta_col_cond
+
+ecolumn=`awk -F':' '{if($'$meta_col_cond'=="'$val'") print $0}' $url/data/$Ntable`
+        if [[ -z $ecolumn ]];then
+            echo -e "\033[31mERROR value Not Valid 😄 \033[m"
+          return
+        fi
 awk -F':' '{if($'$meta_col_cond' == "'$val'") print $'$meta_col_num'}' $url/data/$Ntable
   
 }
@@ -128,4 +168,3 @@ selectMenu
 
 
 
->>>>>>> 495ed661f0e884f446efacb379bb2347e1c719b3

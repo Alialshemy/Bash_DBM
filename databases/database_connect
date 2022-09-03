@@ -23,4 +23,5 @@ check()
       
      
 read -r -p "Enter your database to connect :" database_name
+echo $database_name
 check $database_name
