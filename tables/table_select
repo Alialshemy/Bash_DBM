@@ -26,8 +26,8 @@ function selectMenu {
 function selectAll {
   clear
   echo -e "\n-------------Select All--------------------\n"
-  read -p "Enter Table Name: " tName
-  if [ ! -e $url/data/$tName ]; then
+  read -r -p "Enter Table Name: " tName
+  if [[ `check_name "$tName"` = "false" && ! -e $url/data/$tName ]]; then
       echo -e "\033[31mERROR Table Name 😄 \033[m"
   else
     awk -F':' '{print $0}' $url/data/$tName
@@ -43,7 +43,7 @@ function selectCol {
   clear
   echo -e "\n\n+--------Select Row By Id-----------+"
   read -r -p "Enter Table Name: " tName
-  if  [  -e $url/data/$tName ];then
+  if  [[ `check_name "$tName"` = "true" && -e $url/data/$tName ]];then
     read -r -p "Enter Row id: " id
     if [[ $id == "" || -z $id ]];then  
         echo "Not Found"
@@ -83,19 +83,19 @@ function selectCon {
 function allCond {
   
   echo -e "Select all columns from TABLE Where FIELD(OPERATOR)VALUE \n"
-  read -p "enter table name: " table
-  if [ ! -e $url/data/$table ]; then
+  read -r -p "enter table name: " table
+  if [[ `check_name "$table"` = "false" && ! -e $url/data/$table ]]; then
       echo -e "\033[31mERROR Table Name 😄 \033[m"
     return
   fi
-    read -p "enter column name: " Ncol
+    read  -r -p "enter column name: " Ncol
     exists=`awk -F':' '{if("'$Ncol'" == $1) print NR}' "$1/meta_data/$table" `
     
     if [[ -z $exists ]];then
       echo -e "\033[31mERROR column Name 😄 \033[m"
       return
     fi
-        read -p "enter condition value: " val
+        read -r -p "enter condition value: " val
         meta_col_num=`awk -F':' '{if("'$Ncol'" == $1) print NR}' "$1/meta_data/$table" `
         ecolumn=`awk -F':' '{if($'$meta_col_num'=="'$val'") print $0}' $url/data/$table`
         if [[ -z $ecolumn ]];then
@@ -107,8 +107,8 @@ function allCond {
 }
 #select Ncol from student where colcond=val
 function specCond {
-  read -p "enter table name: " Ntable
-  if [ ! -e $url/data/$Ntable ]; then
+  read -r -p "enter table name: " Ntable
+  if [[ `check_name "$Ntable"` = "false" && ! -e $url/data/$Ntable ]]; then
       echo -e "\033[31mERROR Table Name 😄 \033[m"
     return
   fi
@@ -118,14 +118,14 @@ function specCond {
       echo -e "\033[31mERROR column Name 😄 \033[m"
       return
     fi
-  read -p "enter column condition name: " colcond
+  read -r -p "enter column condition name: " colcond
    exists=`awk -F':' '{if("'$colcond'" == $1) print NR}' $url/meta_data/$Ntable`
     
     if [[ -z $exists ]];then
       echo -e "\033[31mERROR column Name 😄 \033[m"
       return
     fi
-  read -p "enter condition value: " val
+  read -r -p "enter condition value: " val
 
 meta_col_num=`awk -F':' '{if("'$Ncol'" == $1) print NR}' $url/meta_data/$Ntable`
 meta_col_cond=`awk -F':' '{if("'$colcond'" == $1) print NR}' $url/meta_data/$Ntable`

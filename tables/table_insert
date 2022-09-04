@@ -10,7 +10,7 @@ data=''
 while [[ $try -gt 0 ]]; do
   echo "+--------------------------------------Insert Table------------------------------+"
   read -r -p "Enter Table name :" tb_name
-  if [[ `check_name $tb_name` = "true"  && -e $1/meta_data/$tb_name ]]
+  if [[ `check_name "$tb_name"` = "true"  && -e $1/meta_data/$tb_name ]]
   then
           declare -i num_field=`cat $1/meta_data/$tb_name | wc -l`-1 #number of filed
             for colum in $(awk -F: '{ print $1 }' $1/meta_data/$tb_name); do

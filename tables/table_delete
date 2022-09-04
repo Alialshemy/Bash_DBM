@@ -2,7 +2,7 @@
 
 function deleteFromTable {
   read -r -p "Enter Table Name: " tName
-  if [ -e $1/data/$tName ];then
+  if [[ -e $1/data/$tName ]];then
         read -r -p "Enter Row id: " id
         NR=`awk -F ':' '{if ($1=="'$id'" ) print NR}' $1/data/$tName 2>>./.error.log`
         if [[ $id == "" || -z $NR ]];then  
