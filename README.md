@@ -1,6 +1,16 @@
+# DBMS Project
+
+DBMS is a Bash script DataBase Management System
+
+# installation & Run
+Use the version control tool [git](https://git-scm.com/) to clone the project.
+
+    https://github.com/Alialshemy/Bash_DBM.git
+   
+    ./main.sh
+
 Or press "<span style="color:green">Code</span>" button then chose "Download ZIP"
 
-# DataBase layer
 # Our Features
 
 ## DataBase layer
@@ -10,7 +20,6 @@ Or press "<span style="color:green">Code</span>" button then chose "Download ZIP
 - Connect To DataBase
 - Drop DataBase
 
-# Table Layer
 ## Table Layer
 
 - Crate Table
@@ -18,7 +27,6 @@ Or press "<span style="color:green">Code</span>" button then chose "Download ZIP
 - Drop Table
 - Select Table
 
-# Record Layer
 ## Record Layer
 
 - Insert Into Table
@@ -28,6 +36,5 @@ Or press "<span style="color:green">Code</span>" button then chose "Download ZIP
 ---
 
 # Contributing
-Pull requests are welcome. For major changes , please open an issue first to discuss what you would like to change.
-please make sure to update tests as appropriate.
-# Screenshot
+Pull requests are welcome.
+
