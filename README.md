@@ -1,28 +1,33 @@
-# Bash_DBM
-Bash Shell Script Database Management System (DBMS):
+Or press "<span style="color:green">Code</span>" button then chose "Download ZIP"
 
-The Project aim to develop DBMS, that will enable users to store and retrieve the data from Hard-disk.
+# DataBase layer
+# Our Features
 
-The Project Features:
-The Application will be CLI Menu based app, that will provide to user this Menu items:
-Main Menu:
+## DataBase layer
+
 - Create Database
-- List Databases
-- Connect To Databases
-- Drop Database
+- List DataBase
+- Connect To DataBase
+- Drop DataBase
 
-Upon user Connect to Specific Database, there will be new Screen with this Menu:
-- Create Table 
+# Table Layer
+## Table Layer
+
+- Crate Table
 - List Tables
 - Drop Table
-- Insert into Table
+- Select Table
+
+# Record Layer
+## Record Layer
+
+- Insert Into Table
 - Select From Table
 - Delete From Table
 - Update Table
+---
 
-How works:
-- The Database will store as Directory on Current Script File
-- The Select of Rows displayed in screen/terminal in  an Accepted/Good Format
--Ask about primary key in create table and check for it in the insert into table
-
-
+# Contributing
+Pull requests are welcome. For major changes , please open an issue first to discuss what you would like to change.
+please make sure to update tests as appropriate.
+# Screenshot
